@@ -1,0 +1,158 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.text-center{
+  text-align: center;
+}
+.d-flex{
+  display: flex;
+}
+.justify-between{
+  justify-content: space-between;
+}
+.justify-content-center{
+  justify-content: center;
+}
+.text-capitalize{
+  text-transform: capitalize;
+}
+.text-uppercase{
+  text-transform: uppercase;
+}
+.h-margin{
+  margin: 6px 20px 6px 20px;
+}
+.cursor-pointer{
+  cursor: pointer;
+}
+.body-div {
+  height: 100vh;
+  width: 100%;
+  /* display: flex; */
+  background: #d4d1cb;
+}
+.landing-container {
+  display: flex;
+  /* width: 100%; */
+  justify-content: space-between;
+}
+.calc-div {
+  width: 35%;
+  border: 1px solid #fff;
+}
+.product-div {
+  width: 65%;
+  border: 1px solid #fff;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap; 
+}
+
+/* ProductCard.css */
+
+.product-card {
+  height: 125px;
+  width: 125px;
+  margin: 10px ;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  
+}
+
+.product-image-container {
+  position: relative;
+  height: 125px;
+  width: 125px;
+}
+
+.product-image {
+  width: 125px;
+  height: 125px;
+  object-fit: cover;
+}
+
+.product-name-overlay {
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(24, 22, 22, 0.53);
+  border-radius: 4px;
+  outline: none;
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-info-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(24, 22, 22, 0.53);
+  border-radius: 4px;
+  outline: none;
+  border: 1px solid;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.product-card:hover .product-info-overlay {
+  opacity: 1;
+  visibility: visible;
+  cursor: pointer;
+}
+.product-name {
+  font-size: 1.2rem;
+  color: #fff;
+  margin: 0;
+  text-transform: capitalize;
+}
+.product-price {
+  color: #007bff;
+  margin-bottom: 8px;
+}
+
+.product-description {
+  color: #fff;
+  font-size: 0.9rem;
+  line-height: 1.2;
+  margin: 0;
+}
+
+/* no product box*/
+.no-product-container{
+  height: 50px;
+  width: 400px;
+  background-color: #fff;
+  margin: 20px 10px 20px 15px;
+  padding: 20px;
+}
+.product-table{
+  background-color: #fff;
+  margin: 20px 10px 20px 15px;
+  padding: 10px;
+  border-radius: 4px;
+}
+.crose-icon{
+  height: 15px;
+    width: 15px;
+    border: 1px solid;
+    border-radius: 50%;
+}
+.plus-icon{
+  height: 15px;
+    width: 15px;
+    border: 1px solid;
+    border-radius: 5px;
+}
