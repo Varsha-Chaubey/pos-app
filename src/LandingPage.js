@@ -3,6 +3,7 @@ import "./assets/css/index.css";
 import ProductList from "./product/productList";
 import ProductSelect from "./calc/productSelect";
 import { productsData } from "./data/product";
+import Calculation from "./calc/calculation";
 const LandingPage = () => {
   const [product, setProduct] = useState(productsData);
   const [selectedProduct, setSelectedProduct] = useState([]);
@@ -22,6 +23,7 @@ const LandingPage = () => {
       setSelectedProduct([...selectedProduct, { ...product, quantity: 1 }]);
     }
   };
+
   return (
     <>
       <div className="body-div">
@@ -37,6 +39,10 @@ const LandingPage = () => {
               selectedProduct={selectedProduct}
               setSelectedProduct={setSelectedProduct}
               onAddProduct={handleAddProduct}
+            />
+            <Calculation
+              selectedProduct={selectedProduct}
+              setSelectedProduct={setSelectedProduct}
             />
           </div>
           <div className="product-div">

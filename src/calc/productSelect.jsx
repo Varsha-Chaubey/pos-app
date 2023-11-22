@@ -10,6 +10,16 @@ const ProductSelect = (props) => {
     props.setSelectedProduct(updatedCart);
   };
 
+  // for add or subtract quantity
+  const handleQuantityChange = (productId, change) => {
+    const updatedSelectedProduct = props.selectedProduct.map((item) =>
+      item.id === productId
+        ? { ...item, quantity: Math.max(item.quantity + change, 0) }
+        : item
+    );
+    props.setSelectedProduct(updatedSelectedProduct);
+  };
+
   return (
     <>
       {props.selectedProduct && props.selectedProduct.length >= 1 ? (
@@ -32,11 +42,19 @@ const ProductSelect = (props) => {
                     <td style={{ width: "20%" }} className="">
                       {item.price}
                     </td>
-                    <td style={{ width: "5%" }} className="cursor-pointer">
+                    <td
+                      style={{ width: "5%" }}
+                      className="cursor-pointer"
+                      onClick={() => handleQuantityChange(item.id, -1)}
+                    >
                       <img src={minus} alt="close" className="plus-icon" />
                     </td>
                     <td style={{ width: "2%" }}>{item.quantity}</td>
-                    <td style={{ width: "11%" }} className="cursor-pointer">
+                    <td
+                      style={{ width: "11%" }}
+                      className="cursor-pointer"
+                      onClick={() => handleQuantityChange(item.id, 1)}
+                    >
                       <img src={plus} alt="close" className="plus-icon" />
                     </td>
                     <td style={{ width: "18%" }}>
