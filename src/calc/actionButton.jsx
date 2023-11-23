@@ -5,6 +5,11 @@ const ActionButton = (props) => {
     <button
       style={{
         backgroundColor: props.backgroundColor,
+        width:props.width,
+        height:props.height,
+        border:props.border,
+        borderRadius:props.borderRadius,
+        color:props.color
       }}
       className="btn"
       onClick={props.onClick}

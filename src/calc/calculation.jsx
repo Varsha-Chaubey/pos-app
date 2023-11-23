@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ActionButton from "./actionButton";
+import ReceiptModal from "./ReceiptModal";
 
 export const CalcTable = (props) => {
   return (
@@ -27,6 +28,7 @@ export const CalcTable = (props) => {
             onChange={props.onChange}
           />
         </td>
+        <td>{props.item}</td>
       </tr>
     </table>
   );
@@ -34,27 +36,32 @@ export const CalcTable = (props) => {
 
 const Calculation = (props) => {
   const [subTotal, setSubTotal] = useState(0);
+  const [vat, setVat] = useState(0);
+  const [disc, setDisc] = useState(0);
   const [vatTax, setVatTax] = useState(0);
   const [discount, setDiscount] = useState(0);
   const [total, setTotal] = useState(0);
+  const [isModalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     const subTotalValue = props.selectedProduct.reduce(
       (acc, item) => acc + item.price * item.quantity,
       0
     );
-    const vatTaxValue = (vatTax / 100) * subTotalValue;
-    const discountValue = (discount / 100) * subTotalValue;
-
-    const totalValue = subTotalValue + vatTaxValue - discountValue;
-    const safeTotal = isFinite(totalValue) ? totalValue : 0;
-
-    setSubTotal(subTotalValue.toFixed(2));
-    setVatTax(vatTaxValue.toFixed(2));
-    setDiscount(discountValue.toFixed(2));
-    setTotal(safeTotal.toFixed(2));
+    const totalValue = subTotalValue + vatTax - discount;
+    setSubTotal(subTotalValue);
+    setTotal(totalValue);
   }, [props.selectedProduct, vatTax, discount]);
-  console.log(vatTax);
+
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
+  // for total selected product
+  var totalItemCount = props.selectedProduct
+    ?.map((item) => item.quantity)
+    .reduce((a, c) => {
+      return a + c;
+    }, 0);
+
   return (
     <>
       <div style={{ borderRadius: "7px" }}>
@@ -63,20 +70,28 @@ const Calculation = (props) => {
           inputType={"text"}
           value={subTotal}
           disabled
+          item={`${totalItemCount} items`}
         />
         <CalcTable
-          heading={"VAT text"}
+          heading={"VAT tax"}
           inputType={"number"}
-          value={vatTax}
+          value={vat}
           onChange={(e) => {
-            setVatTax(e.target.value)
+            console.log(e.target.value, "value");
+            setVat(parseFloat(e.target.value));
+            setVatTax(parseFloat(e.target.value / 100));
           }}
+          item={`${vatTax} EUR`}
         />
         <CalcTable
           heading={"discount"}
           inputType={"number"}
-          value={discount}
-          onChange={(e) => setDiscount(e.target.value)}
+          value={disc}
+          onChange={(e) => {
+            setDisc(parseFloat(e.target.value));
+            setDiscount(parseFloat(e.target.value / 100));
+          }}
+          item={`${discount} EUR`}
         />
         <CalcTable
           heading={"total"}
@@ -94,7 +109,27 @@ const Calculation = (props) => {
             props.setSelectedProduct(data);
           }}
         />
-        <ActionButton lable={"Process Sale"} backgroundColor={"#04b344"} />
+        <ActionButton
+          lable={"Process Sale"}
+          backgroundColor={"#04b344"}
+          onClick={() => {
+            if (props.selectedProduct && props.selectedProduct.length) {
+              setModalOpen(true);
+            } else {
+              setModalOpen(false);
+            }
+          }}
+        />
+        <ReceiptModal
+          isOpen={isModalOpen}
+          closeModal={closeModal}
+          selectedProduct={props.selectedProduct}
+          discount={disc}
+          vatTax={vat}
+          total={total}
+          totalItemCount={totalItemCount}
+          setSelectedProduct={props.setSelectedProduct}
+        />
       </div>
     </>
   );
